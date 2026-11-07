@@ -10,7 +10,7 @@ export default function NewSitePage() {
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     const token = localStorage.getItem("po_token");
-    const r = await fetch("http://localhost:4000/api/sites", {
+    const r = await fetch("/api/sites", {
       method: "POST",
       headers: { "Content-Type": "application/json", ...(token ? { Authorization: `Bearer ${token}` } : {}) },
       body: JSON.stringify(form),
@@ -43,3 +43,4 @@ export default function NewSitePage() {
     </div>
   );
 }
+

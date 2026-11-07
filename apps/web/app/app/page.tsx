@@ -6,8 +6,8 @@ export default function OverviewPage() {
       <h1 className="text-2xl font-heading font-bold">Energy Overview</h1>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {[
-          { label: "Total measured energy", value: "—", note: "Connect a site to begin" },
-          { label: "Reporting period", value: "—", note: "No active period" },
+          { label: "Total measured energy", value: "â€”", note: "Connect a site to begin" },
+          { label: "Reporting period", value: "â€”", note: "No active period" },
           { label: "Meter feed status", value: "0 connected", note: "Register a meter" },
           { label: "Verified attributes", value: "0 kWh", note: "Awaiting attestation" },
         ].map((k) => (
@@ -21,7 +21,7 @@ export default function OverviewPage() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {[
           { label: "Certificate coverage", value: "0%" },
-          { label: "Grid carbon intensity", value: "— gCO₂/kWh" },
+          { label: "Grid carbon intensity", value: "â€” gCOâ‚‚/kWh" },
           { label: "Unverified intervals", value: "0" },
           { label: "Missing data intervals", value: "0" },
         ].map((k) => (
@@ -35,3 +35,4 @@ export default function OverviewPage() {
     </div>
   );
 }
+

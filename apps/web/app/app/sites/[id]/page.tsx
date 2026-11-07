@@ -14,7 +14,7 @@ export default function SiteDetailPage() {
 
   useEffect(() => {
     const token = localStorage.getItem("po_token");
-    const url = new URL(`http://localhost:4000/api/sites/${params.id}`);
+    const url = new URL(`/api/sites/${params.id}`);
     fetch(url, {
       headers: token ? { Authorization: `Bearer ${token}` } : {},
     })
@@ -29,7 +29,7 @@ export default function SiteDetailPage() {
   useEffect(() => {
     if (!site) return;
     const token = localStorage.getItem("po_token");
-    const url = new URL("http://localhost:4000/api/readings");
+    const url = new URL("/api/readings");
     url.searchParams.set("siteId", site.id);
     fetch(url, {
       headers: token ? { Authorization: `Bearer ${token}` } : {},

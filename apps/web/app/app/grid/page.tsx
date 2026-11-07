@@ -11,7 +11,7 @@ export default function GridPage() {
 
   useEffect(() => {
     const token = localStorage.getItem("po_token");
-    fetch("http://localhost:4000/api/integrations/grid", {
+    fetch("/api/integrations/grid", {
       headers: token ? { Authorization: `Bearer ${token}` } : {},
     })
       .then((r) => r.json())
@@ -23,7 +23,7 @@ export default function GridPage() {
     setLoading(true);
     const token = localStorage.getItem("po_token");
     const r = await fetch(
-      "http://localhost:4000/api/integrations/grid?siteId=" +
+      "/api/integrations/grid?siteId=" +
         siteId +
         "&from=" +
         from +
@@ -121,7 +121,7 @@ export default function GridPage() {
             <thead>
               <tr className="text-left text-secondary border-b border-borderc">
                 <th className="py-3">Timestamp</th>
-                <th className="text-width-150">gCO₂/kWh</th>
+                <th className="text-width-150">gCOâ‚‚/kWh</th>
                 <th className="text-width-120">Source</th>
                 <th className="text-width-80">Resolution</th>
               </tr>
@@ -135,7 +135,7 @@ export default function GridPage() {
                   <td className="font-mono text-lg text-deepgreen">
                     {d.gCo2PerKWh}
                   </td>
-                  <td className="text-secondary text-sm">{d.source || "—"}</td>
+                  <td className="text-secondary text-sm">{d.source || "â€”"}</td>
                   <td className="text-secondary text-sm">{d.resolution || "hourly"}</td>
                 </tr>
               ))}

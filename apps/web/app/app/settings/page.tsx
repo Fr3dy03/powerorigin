@@ -8,7 +8,7 @@ export default function SettingsPage() {
 
   useEffect(() => {
     const token = localStorage.getItem("po_token");
-    fetch("http://localhost:4000/api/auth/users", {
+    fetch("/api/auth/users", {
       headers: token ? { Authorization: `Bearer ${token}` } : {},
     })
       .then((r) => r.json())
@@ -18,7 +18,7 @@ export default function SettingsPage() {
   const handleCreateUser = async (e: React.FormEvent) => {
     e.preventDefault();
     const token = localStorage.getItem("po_token");
-    const r = await fetch("http://localhost:4000/api/auth/register", {
+    const r = await fetch("/api/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -59,7 +59,7 @@ export default function SettingsPage() {
                 </span>
               </td>
               <td className="text-xs text-secondary">
-                {u.createdAt ? new Date(u.createdAt).toLocaleDateString() : "—"}
+                {u.createdAt ? new Date(u.createdAt).toLocaleDateString() : "â€”"}
               </td>
             </tr>
           ))}

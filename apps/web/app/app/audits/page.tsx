@@ -8,7 +8,7 @@ export default function AuditsPage() {
 
   useEffect(() => {
     const token = localStorage.getItem("po_token");
-    fetch("http://localhost:4000/api/audits", {
+    fetch("/api/audits", {
       headers: token ? { Authorization: `Bearer ${token}` } : {},
     })
       .then((r) => r.json())
@@ -18,7 +18,7 @@ export default function AuditsPage() {
   const handleCreateFinding = async (e: React.FormEvent) => {
     e.preventDefault();
     const token = localStorage.getItem("po_token");
-    const r = await fetch("http://localhost:4000/api/audits", {
+    const r = await fetch("/api/audits", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -36,7 +36,7 @@ export default function AuditsPage() {
 
   const handleResolve = async (id: string) => {
     const token = localStorage.getItem("po_token");
-    await fetch(`http://localhost:4000/api/audits/findings/${id}/resolve`, {
+    await fetch(`/api/audits/findings/${id}/resolve`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -54,7 +54,7 @@ export default function AuditsPage() {
     const notes = (select as any).notesValue || "";
     const evidenceDigest = (select as any).evidenceDigestValue || "";
     const token = localStorage.getItem("po_token");
-    const r = await fetch(`http://localhost:4000/api/audits/${claimId}/attest`, {
+    const r = await fetch(`/api/audits/${claimId}/attest`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

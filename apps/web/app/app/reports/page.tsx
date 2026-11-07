@@ -15,7 +15,7 @@ export default function ReportsPage() {
     setLoading(true);
     const token = localStorage.getItem("po_token");
     const r = await fetch(
-      `http://localhost:4000/api/reports/site/${siteId}?from=${dateFrom}&to=${dateTo}`,
+      `/api/reports/site/${siteId}?from=${dateFrom}&to=${dateTo}`,
       {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       }
@@ -100,7 +100,7 @@ export default function ReportsPage() {
             <div className="mb-4">
               <p className="text-secondary mb-1">Grid Carbon Intensity</p>
               <p className="font-mono text-lg text-deepgreen">
-                {report.gridIntensity} gCO₂/kWh
+                {report.gridIntensity} gCOâ‚‚/kWh
               </p>
             </div>
           )}
@@ -144,7 +144,7 @@ export default function ReportsPage() {
           href="/app/sites"
           className="inline-flex items-center px-4 py-2 rounded-lg border border-forest text-forest text-sm font-medium hover:bg-forest hover:text-white"
         >
-          ← Back to sites
+          â† Back to sites
         </Link>
       </div>
     </div>

@@ -7,7 +7,7 @@ export default function ClaimsPage() {
 
   useEffect(() => {
     const token = localStorage.getItem("po_token");
-    fetch("http://localhost:4000/api/claims", {
+    fetch("/api/claims", {
       headers: token ? { Authorization: `Bearer ${token}` } : {},
     })
       .then((r) => r.json())
@@ -49,7 +49,7 @@ export default function ClaimsPage() {
             </div>
 
             <div className="text-sm text-secondary mt-1">
-              Site {c.siteId} · {c.energyQuantityKWh} kWh ·
+              Site {c.siteId} Â· {c.energyQuantityKWh} kWh Â·
               {c.methodologyVersion}
             </div>
 
@@ -73,7 +73,7 @@ export default function ClaimsPage() {
 
             <div className="mt-3 pt-3 border-t border-borderc">
               <span className="text-xs text-secondary">Auditor:</span>
-              <span className="text-secondary">{c.auditorId || "—"}</span>
+              <span className="text-secondary">{c.auditorId || "â€”"}</span>
             </div>
           </div>
         ))}

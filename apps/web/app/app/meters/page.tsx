@@ -9,7 +9,7 @@ export default function MetersPage() {
 
   useEffect(() => {
     const token = localStorage.getItem("po_token");
-    fetch("http://localhost:4000/api/meters", {
+    fetch("/api/meters", {
       headers: token ? { Authorization: `Bearer ${token}` } : {},
     })
       .then((r) => r.json())
@@ -19,7 +19,7 @@ export default function MetersPage() {
   const handleCreate = async (form: any) => {
     setCreating(true);
     const token = localStorage.getItem("po_token");
-    const r = await fetch("http://localhost:4000/api/meters", {
+    const r = await fetch("/api/meters", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -117,7 +117,7 @@ export default function MetersPage() {
             disabled={creating}
             className="col-span-6 mt-4 py-2 rounded-lg bg-forest text-white font-medium hover:bg-deepgreen disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {creating ? "Creating…" : "Register meter"}
+            {creating ? "Creatingâ€¦" : "Register meter"}
           </button>
         </form>
       </div>
@@ -148,7 +148,7 @@ export default function MetersPage() {
                   <td>{m.unit}</td>
                   <td>{m.status}</td>
                   <td className="font-mono text-xs">
-                    {m.lastReadingAt ? new Date(m.lastReadingAt).toISOString() : "—"}
+                    {m.lastReadingAt ? new Date(m.lastReadingAt).toISOString() : "â€”"}
                   </td>
                   <td className="py-3">
                     <Link
