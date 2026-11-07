@@ -16,7 +16,7 @@ import integrationsRouter from "./routes/integrations";
 
 export const prisma = new PrismaClient();
 
-const app = express();
+export const app = express();
 app.use(helmet());
 app.use(cors({ origin: process.env.CORS_ORIGIN || "http://localhost:3000", credentials: true }));
 app.use(express.json({ limit: "10mb" }));
@@ -33,7 +33,9 @@ app.use("/api/audits", auditsRouter);
 app.use("/api/reports", reportsRouter);
 app.use("/api/integrations", integrationsRouter);
 
-const port = Number(process.env.PORT || 4000);
-app.listen(port, () => {
-  console.log(`PowerOrigin backend listening on ${port}`);
-});
+if (!process.env.VERCEL) {
+  const port = Number(process.env.PORT || 4000);
+  app.listen(port, () => {
+    console.log(`PowerOrigin backend listening on ${port}`);
+  });
+}
