@@ -31,6 +31,18 @@ Energy provenance and evidence platform for data centres and distributed compute
 5. `npm run dev --workspace=packages/backend`
 6. `npm run dev --workspace=apps/web`
 
+## Vercel deployment
+The web app and API are deployed as separate Vercel projects. Set each project's Root Directory to its workspace:
+- Web project: `apps/web`
+- API project: `packages/backend`
+
+GitHub Actions deploys both projects on every push to `master`. Configure these GitHub Actions secrets:
+- `VERCEL_TOKEN`
+- `VERCEL_WEB_ORG_ID` and `VERCEL_WEB_PROJECT_ID`
+- `VERCEL_API_ORG_ID` and `VERCEL_API_PROJECT_ID`
+
+Set `NEXT_PUBLIC_API_URL` in the web Vercel project to the deployed API URL plus `/api`, for example `https://powerorigin-api.vercel.app/api`. Set the backend's database, JWT, CORS, and BOT Chain environment variables in the API project.
+
 ## Smart contracts
 ```
 cd packages/contracts
