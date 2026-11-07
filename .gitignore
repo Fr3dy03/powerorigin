@@ -1,0 +1,17 @@
+node_modules
+
+.secrets/
+
+.next/
+.next_old/
+**/.next/
+**/.next_old/
+web-dev.out.log
+web-dev.err.log
+*.log
+
+
+packages/contracts/lib/
+packages/contracts/out/
+packages/contracts/cache/
+packages/contracts/broadcast/

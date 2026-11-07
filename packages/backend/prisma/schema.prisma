@@ -1,0 +1,158 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  password  String
+  role      String   @default("operator")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Site {
+  id           String   @id @default(cuid())
+  facilityId   String   @unique
+  operator     String
+  region       String
+  gridZone     String
+  active       Boolean  @default(true)
+  reportingStart DateTime?
+  reportingEnd   DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  meters       Meter[]
+  readings     IntervalReading[]
+  claims       EnergyClaim[]
+  gridData     GridIntensity[]
+}
+
+model Meter {
+  id              String   @id @default(cuid())
+  siteId          String
+  site            Site     @relation(fields: [siteId], references: [id])
+  vendor          String
+  externalId      String
+  intervalMinutes Int      @default(60)
+  unit            String   @default("kWh")
+  status          String   @default("connected")
+  lastReadingAt   DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  readings        IntervalReading[]
+}
+
+model IntervalReading {
+  id        String   @id @default(cuid())
+  meterId   String
+  meter     Meter    @relation(fields: [meterId], references: [id])
+  siteId    String
+  site      Site     @relation(fields: [siteId], references: [id])
+  timestamp DateTime
+  kWh       Float
+  quality   String   @default("measured")
+  source    String
+  createdAt DateTime @default(now())
+
+  @@unique([meterId, timestamp])
+  @@index([siteId, timestamp])
+}
+
+model GridIntensity {
+  id        String   @id @default(cuid())
+  siteId    String
+  site      Site     @relation(fields: [siteId], references: [id])
+  timestamp DateTime
+  gCo2PerKWh Float
+  source    String
+  resolution String  @default("hourly")
+  createdAt DateTime @default(now())
+
+  @@unique([siteId, timestamp])
+  @@index([siteId, timestamp])
+}
+
+model Certificate {
+  id                  String   @id @default(cuid())
+  issuer              String
+  reference           String   @unique
+  energyQuantityKWh   Float
+  periodStart         DateTime
+  periodEnd           DateTime
+  energySource        String
+  geographicCoverage  String
+  validUntil          DateTime
+  verificationState   String   @default("unverified")
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  claims              EnergyClaimCertificate[]
+}
+
+model EnergyClaim {
+  id                 String   @id @default(cuid())
+  siteId             String
+  site               Site     @relation(fields: [siteId], references: [id])
+  reportingStart     DateTime
+  reportingEnd       DateTime
+  energyQuantityKWh  Float
+  measurementSource  String
+  methodologyVersion String
+  auditorId          String?
+  status             String   @default("submitted")
+  evidenceDigest     String
+  onChainClaimId     String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  certificates       EnergyClaimCertificate[]
+  attestations       Attestation[]
+  findings           AuditFinding[]
+}
+
+model EnergyClaimCertificate {
+  claimId       String
+  certificateId String
+  claim         EnergyClaim   @relation(fields: [claimId], references: [id])
+  certificate   Certificate   @relation(fields: [certificateId], references: [id])
+
+  @@id([claimId, certificateId])
+}
+
+model Attestation {
+  id            String   @id @default(cuid())
+  claimId       String
+  claim         EnergyClaim @relation(fields: [claimId], references: [id])
+  auditorId     String
+  approved      Boolean
+  notes         String?
+  issuedAt      DateTime @default(now())
+  evidenceDigest String
+}
+
+model AuditFinding {
+  id          String   @id @default(cuid())
+  claimId     String
+  claim       EnergyClaim @relation(fields: [claimId], references: [id])
+  type        String
+  severity    String
+  description String
+  resolved    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+model OnChainTransaction {
+  id          String   @id @default(cuid())
+  txHash      String   @unique
+  chainId     Int
+  method      String
+  status      String   @default("pending")
+  receipt     Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

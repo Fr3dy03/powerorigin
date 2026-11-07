@@ -1,0 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ivory: #F4F1EA;
+  --surface: #FFFCF7;
+  --forest: #0F6670;
+  --deepgreen: #102A43;
+  --leaf: #2CB8A6;
+  --sage: #DDEEEF;
+  --amber: #E8894A;
+  --graphite: #243447;
+  --secondary: #667587;
+  --border: #D7DEE5;
+  --critical: #C9514A;
+}
+
+html, body { background: var(--ivory); color: var(--graphite); font-family: "Inter", sans-serif; }
+h1, h2, h3, h4 { font-family: "Manrope", sans-serif; color: var(--deepgreen); }
+.font-mono { font-family: "IBM Plex Mono", monospace; }
