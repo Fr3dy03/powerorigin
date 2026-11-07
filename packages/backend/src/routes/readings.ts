@@ -60,7 +60,7 @@ router.get("/gaps", async (req, res) => {
   const gaps: { start: string; end: string }[] = [];
   let cursor = new Date(from).getTime();
   const end = new Date(to).getTime();
-  const set = new Set(readings.map((r) => r.timestamp.getTime()));
+  const set = new Set(readings.map((r: { timestamp: Date }) => r.timestamp.getTime()));
   while (cursor <= end) {
     if (!set.has(cursor)) {
       const gStart = cursor;
